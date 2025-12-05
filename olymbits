@@ -1,2 +1,104 @@
-if(None):
-	print(2)
+import sys
+import math
+
+# Auto-generated code below aims at helping you parse
+# the standard input according to the problem statement.
+
+
+
+class Screen:
+    def __init__(self, trace="", posJ1=0, posJ2=0, posJ3=0, stunJ1=0, stunJ2=0, stunJ3=0):
+        self.trace = trace
+        self.posJ1 = posJ1
+        self.posJ2 = posJ2
+        self.posJ3 = posJ3
+        self.stunJ1 = stunJ1
+        self.stunJ2 = stunJ2
+        self.stunJ3 = stunJ3
+
+
+    def square_at_pos_plus(self, indice):
+        pos_square = self.posJ1 + indice
+        if self.is_valid(pos_square):
+            return self.trace[pos_square]
+        return False
+
+    def gameOver(self):
+        return self.trace == 'GAME_OVER'
+
+    def is_valid(self, pos):
+     return pos < len(self.trace) and not self.gameOver()
+
+    def is_stunned(self):
+        return self.stunJ1
+
+
+
+def is_obstacle(square):
+    return (square == '#')
+
+
+def obstacle_at_pos_plus(indice):                 #dis si il y a u moins une prtie avec un obstacle
+    return number_obstacle_at_pos_plus(indice) > 0
+
+
+def number_obstacle_at_pos_plus(indice):             #Compte le nombre de parties dans lesquelles il y un obstacle a la pos du joueur + indice
+    num = 0
+    for part in parties:
+        square = part.square_at_pos_plus(indice)
+        if square and is_obstacle(square) and not part.is_stunned():
+            num += 1
+    return num
+
+def log(*args):
+    print(*args, file=sys.stderr, flush=True)
+
+
+player_idx = int(input())
+nb_games = int(input())
+parties = [Screen(), Screen(), Screen(), Screen()]
+# game loop
+
+while True:
+    
+
+    for i in range(3):
+        score_info = input()
+    for i in range(nb_games):
+        inputs = input().split()
+        gpu = inputs[0]
+        reg_0 = int(inputs[1])
+        reg_1 = int(inputs[2])
+        reg_2 = int(inputs[3])
+        reg_3 = int(inputs[4])
+        reg_4 = int(inputs[5])
+        reg_5 = int(inputs[6])
+        reg_6 = int(inputs[7])
+
+        partie = Screen(gpu, reg_0, reg_1, reg_3, reg_4, reg_5, reg_6)
+        parties[i] = partie
+
+  
+
+    if obstacle_at_pos_plus(1) and number_obstacle_at_pos_plus(1) >= number_obstacle_at_pos_plus(2):
+        print("UP")
+    elif obstacle_at_pos_plus(2):
+        print("LEFT")            
+    elif obstacle_at_pos_plus(3):
+        print("DOWN")
+    else:
+        print ("RIGHT")
+    
+    for i in range(4):      
+        log(parties[i].trace)
+
+    log("Pos joueur1 :", parties[0].posJ1)
+    log("Pos joueur2 :", parties[1].posJ1)
+    log("Pos joueur3 :", parties[2].posJ1)
+    log("Pos joueur4 :", parties[3].posJ1)
+    log("Nombre d'obstacle à pos + 1 :", number_obstacle_at_pos_plus(1))
+    log("Nombre d'obstacle à pos + 2 :", number_obstacle_at_pos_plus(2))
+    log("Nombre d'obstacle à pos + 3 :", number_obstacle_at_pos_plus(3))
+        
+    log("")
+

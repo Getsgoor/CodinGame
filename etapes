@@ -1,0 +1,11 @@
+>Faire en sorte que tous les obstacles soient sautés en vitesse 1
+>Faire en sorte que tous les obstacles soient sautés en vitesse 2 et 3
+>utiliser une classe au lieu de dictionnaire pour stocker les 4 parties
+>implementer differentes méthodes dans la classe:
+	is_stunned
+	gameOver
+	get_posJ
+	next_square_Valid
+	next_square_sEmpty
+-faire sauter le moins bon des 4 en priorité
+>preferer en en sacrifier un plutot que deux autres tombent a la récéption d'un saut
