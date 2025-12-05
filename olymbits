@@ -1,0 +1,60 @@
+
+import sys
+import math
+
+# Auto-generated code below aims at helping you parse
+# the standard input according to the problem statement.
+
+def next_square_valid(pos, trace) :
+    return pos + 1 < len(trace) and trace != 'GAME_OVER'
+
+def obstacle_next_square():
+    for part in parties:
+        trace = part["trace"]
+        pos = part["pos0"]  
+        
+
+        if(next_square_valid(pos, trace)) :
+            if (trace[pos+1] == '#'):
+                return True
+    return False
+
+
+player_idx = int(input())
+nb_games = int(input())
+parties = [{}, {}, {}, {}]
+
+def log(*args):
+    print(*args, file=sys.stderr, flush=True)
+# game loop
+while True:
+    
+    for i in range(3):
+        score_info = input()
+    for i in range(nb_games):
+        inputs = input().split()
+        gpu = inputs[0]
+        reg_0 = int(inputs[1])
+        reg_1 = int(inputs[2])
+        reg_2 = int(inputs[3])
+        reg_3 = int(inputs[4])
+        reg_4 = int(inputs[5])
+        reg_5 = int(inputs[6])
+        reg_6 = int(inputs[7])
+
+        dic_partie = dict(trace=gpu, pos0=reg_0, pos1=reg_1, pos2=reg_3, stun0=reg_4, stun1=reg_5, stun2=reg_6)
+        parties[i] = dic_partie
+
+    
+    
+    log(obstacle_next_square())
+
+    for i in range(4):      
+        log(parties[i])
+
+    if (obstacle_next_square()):
+        print("UP")
+    else:
+        print("LEFT")            
+        
+    log("")
