@@ -7,5 +7,9 @@
 	get_posJ
 	next_square_Valid
 	next_square_sEmpty
--faire sauter le moins bon des 4 en priorité
+
 >preferer en en sacrifier un plutot que deux autres tombent a la récéption d'un saut
+>compter le nombre d'obstacles, et garder une trace de ceux franchi
+>si il ne reste plus d'obstacles pour 2 ou 3 joueur, sprinter jusq'uà la fin
+-chercher le chemin qui ferait perdre le moins de temps
+

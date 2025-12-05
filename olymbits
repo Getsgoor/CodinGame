@@ -15,6 +15,11 @@ class Screen:
         self.stunJ1 = stunJ1
         self.stunJ2 = stunJ2
         self.stunJ3 = stunJ3
+        self.total_of_obstacles = 0
+        self.finish = False                         #on estime qu'un joueur a fini si il a sauté tous les obstacles
+        self.count_obstacles()
+        
+
 
 
     def square_at_pos_plus(self, indice):
@@ -22,6 +27,15 @@ class Screen:
         if self.is_valid(pos_square):
             return self.trace[pos_square]
         return False
+
+    def count_obstacles(self):
+        pos_square = self.trace[self.posJ1:]
+        for i_square, square in enumerate(pos_square):
+            if is_obstacle(square) and i_square != self.posJ1:
+                self.total_of_obstacles += 1
+        if self.total_of_obstacles == 0:
+            self.finish = True
+
 
     def gameOver(self):
         return self.trace == 'GAME_OVER'
@@ -32,17 +46,24 @@ class Screen:
     def is_stunned(self):
         return self.stunJ1
 
+    
 
+
+def count_finishes():
+    total = 0
+    for part in parties:
+        total += part.finish
+    return total
 
 def is_obstacle(square):
     return (square == '#')
 
 
-def obstacle_at_pos_plus(indice):                 #dis si il y a u moins une prtie avec un obstacle
-    return number_obstacle_at_pos_plus(indice) > 0
+def obstacle_at_pos_plus(indice):                 #dis si il y au moins une prtie avec un obstacle
+    return count_obstacles_at_pos_plus(indice) > 0
 
 
-def number_obstacle_at_pos_plus(indice):             #Compte le nombre de parties dans lesquelles il y un obstacle a la pos du joueur + indice
+def count_obstacles_at_pos_plus(indice):             #Compte le nombre de parties dans lesquelles il y un obstacle a la pos du joueur + indice
     num = 0
     for part in parties:
         square = part.square_at_pos_plus(indice)
@@ -78,9 +99,9 @@ while True:
         partie = Screen(gpu, reg_0, reg_1, reg_3, reg_4, reg_5, reg_6)
         parties[i] = partie
 
-  
-
-    if obstacle_at_pos_plus(1) and number_obstacle_at_pos_plus(1) >= number_obstacle_at_pos_plus(2):
+    if(count_finishes() >= 3):
+        print("RIGHT")
+    elif obstacle_at_pos_plus(1) and count_obstacles_at_pos_plus(1) >= count_obstacles_at_pos_plus(2):
         print("UP")
     elif obstacle_at_pos_plus(2):
         print("LEFT")            
@@ -89,16 +110,19 @@ while True:
     else:
         print ("RIGHT")
     
-    for i in range(4):      
-        log(parties[i].trace)
+    for part in parties:      
+        log(part.trace)
+    
+    for part in parties:
+        log(part.total_of_obstacles)
 
     log("Pos joueur1 :", parties[0].posJ1)
     log("Pos joueur2 :", parties[1].posJ1)
     log("Pos joueur3 :", parties[2].posJ1)
     log("Pos joueur4 :", parties[3].posJ1)
-    log("Nombre d'obstacle à pos + 1 :", number_obstacle_at_pos_plus(1))
-    log("Nombre d'obstacle à pos + 2 :", number_obstacle_at_pos_plus(2))
-    log("Nombre d'obstacle à pos + 3 :", number_obstacle_at_pos_plus(3))
+    log("Nombre d'obstacle à pos + 1 :", count_obstacles_at_pos_plus(1))
+    log("Nombre d'obstacle à pos + 2 :", count_obstacles_at_pos_plus(2))
+    log("Nombre d'obstacle à pos + 3 :", count_obstacles_at_pos_plus(3))
+    log(count_finishes())
         
     log("")
-
